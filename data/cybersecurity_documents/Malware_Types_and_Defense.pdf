@@ -1,0 +1,16 @@
+Malware Types and Defense Strategies
+1. Viruses:
+- Description: Attaches to files and spreads when executed.
+- Defense: Use antivirus software and avoid suspicious downloads.
+2. Worms:
+- Description: Self-replicating and spreads across networks.
+- Defense: Patch systems and monitor network activity.
+3. Trojans:
+- Description: Disguised as legitimate software.
+- Defense: Train users and use endpoint protection.
+4. Ransomware:
+- Description: Encrypts files and demands ransom.
+- Defense: Maintain backups and use anti-ransomware tools.
+5. Spyware and Adware:
+- Description: Collects user data or displays unwanted ads.
+- Defense: Use privacy-focused software and remove suspicious programs.
