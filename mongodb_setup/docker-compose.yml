@@ -1,0 +1,19 @@
+# vectordb/mongodb_setup/docker-compose.yml
+
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: cybersec-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: Malcom@2024
+
+volumes:
+  mongo-data:
