@@ -1,30 +1,34 @@
+# embeddings/generate_embeddings.py
+
 from sentence_transformers import SentenceTransformer
 import json
 import os
 
+# Load the model
 model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
-documents = [
-    {"text": "Cybersecurity involves protecting systems from digital attacks.", "metadata": {"source": "doc1.pdf", "page": 1}},
-    {"text": "Phishing is used to trick users into revealing sensitive information.", "metadata": {"source": "doc2.pdf", "page": 3}},
-    {"text": "Firewalls are a basic form of network protection.", "metadata": {"source": "doc3.pdf", "page": 5}},
-]
+# Load your real data from the JSON file
+with open("data/cybersecurity_documents/dataset.json", "r", encoding="utf-8") as f:
+    documents = json.load(f)
 
 texts = [doc["text"] for doc in documents]
+metadata_list = [doc["metadata"] for doc in documents]
 
-embeddings =model.encode(texts, show_progress_bar=True)
+# Generate embeddings
+embeddings = model.encode(texts, show_progress_bar=True)
 
-data_to_save = [
-    {
-        "text": text,
+# Save as JSON
+embedded_data = []
+for i, embedding in enumerate(embeddings):
+    embedded_data.append({
+        "text": texts[i],
         "embedding": embedding.tolist(),
-        "metadata": documents[i]["metadata"]
-    }
-    for i, (text,embedding) in enumerate(zip(texts,embeddings))
-]
+        "metadata": metadata_list[i]
+    })
 
-os.makedirs("data",exist_ok=True)
-with open("data/embedded_docs.json", "w") as f:
-    json.dump(data_to_save, f, indent=2)
-    
-print("embeddings generated and saved to data/embedded_docs.json")
+# Save to disk
+os.makedirs("data", exist_ok=True)
+with open("data/embedded_docs.json", "w", encoding="utf-8") as f:
+    json.dump(embedded_data, f, indent=2)
+
+print("✅ Embeddings generated and saved to data/embedded_docs.json")

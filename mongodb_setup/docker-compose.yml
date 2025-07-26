@@ -1,7 +1,5 @@
-# vectordb/mongodb_setup/docker-compose.yml
 
 version: '3.8'
-
 services:
   mongodb:
     image: mongo:6.0

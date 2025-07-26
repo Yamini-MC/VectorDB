@@ -1,27 +1,34 @@
+# chromadb_setup/insert_to_chroma.py
+
+
 import chromadb
-from chromadb.config import Settings
 import json
 import os
-from pathlib import Path
+import shutil
 
-CHROMA_DB_PATH = str(Path(__file__).resolve().parent.parent / "chroma_db")
-chroma_client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
-collection_name = "cybersec_docs"
-collection = chroma_client.get_or_create_collection(name="cybersec_docs")
 
-with open("../embeddings/data/embedded_docs.json", "r") as f:
+CHROMA_COLLECTION_NAME = "cybersec_docs"
+
+
+# Delete the persistent ChromaDB directory if it exists (for a clean insert)
+CHROMA_DB_PATH = "chroma_db"
+if os.path.exists(CHROMA_DB_PATH):
+    shutil.rmtree(CHROMA_DB_PATH)
+
+client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
+collection = client.get_or_create_collection(name=CHROMA_COLLECTION_NAME)
+
+# Load embedded data
+with open("data/embedded_docs.json", "r", encoding="utf-8") as f:
     embedded_docs = json.load(f)
 
-ids = [f"doc_{i}" for i in range(len(embedded_docs))]
-documents = [item["text"] for item in embedded_docs]
-embeddings = [item["embedding"] for item in embedded_docs]
-metadatas = [item["metadata"] for item in embedded_docs]
+# Insert into ChromaDB
+for idx, doc in enumerate(embedded_docs):
+    collection.add(
+        documents=[doc["text"]],
+        embeddings=[doc["embedding"]],
+        metadatas=[doc["metadata"]],
+        ids=[f"doc_{idx}"]
+    )
 
-
-collection.add(
-    documents=documents,
-    embeddings=embeddings,
-    metadatas=metadatas,
-    ids=ids
-)
-print(f"Inserted {len(documents)} documents into ChromaDB collection '{collection_name}'.")
+print(f"✅ Inserted {len(embedded_docs)} documents into ChromaDB under '{CHROMA_COLLECTION_NAME}'.")

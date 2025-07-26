@@ -1,0 +1,42 @@
+[
+  {
+    "text": "A firewall is a network security device that monitors and filters incoming and outgoing network traffic based on an organization's previously established security policies.",
+    "metadata": { "source": "network_security.json", "topic": "firewall" }
+  },
+  {
+    "text": "Phishing attacks use deceptive emails and websites to trick users into divulging personal and financial information such as passwords and credit card numbers.",
+    "metadata": { "source": "social_engineering.json", "topic": "phishing" }
+  },
+  {
+    "text": "Malware includes viruses, worms, Trojan horses, ransomware, and spyware. It is designed to damage or disable computers and computer systems.",
+    "metadata": { "source": "malware_basics.json", "topic": "malware" }
+  },
+  {
+    "text": "Encryption converts data into a code to prevent unauthorized access. Only authorized parties with a decryption key can access the original data.",
+    "metadata": { "source": "encryption_techniques.json", "topic": "encryption" }
+  },
+  {
+    "text": "Zero-day vulnerabilities are software flaws unknown to the vendor. Attackers exploit these before a patch is available, making them highly dangerous.",
+    "metadata": { "source": "zero_day.json", "topic": "zero-day" }
+  },
+  {
+    "text": "Social engineering manipulates people into giving up confidential information. It exploits human psychology rather than technical hacking techniques.",
+    "metadata": { "source": "social_engineering.json", "topic": "social engineering" }
+  },
+  {
+    "text": "Incident response involves detecting, investigating, and recovering from cybersecurity incidents such as data breaches or malware infections.",
+    "metadata": { "source": "incident_response.json", "topic": "incident response" }
+  },
+  {
+    "text": "Threat intelligence is the knowledge that helps organizations understand and prevent cyber threats. It involves gathering data on threat actors, tactics, and vulnerabilities.",
+    "metadata": { "source": "threat_intelligence.json", "topic": "threat intelligence" }
+  },
+  {
+    "text": "Endpoint protection platforms provide centralized security for devices like laptops, mobile phones, and servers, guarding them against malware and unauthorized access.",
+    "metadata": { "source": "endpoint_security.json", "topic": "endpoint protection" }
+  },
+  {
+    "text": "Network segmentation divides a computer network into subnetworks to improve performance and security. It limits the spread of attacks across a network.",
+    "metadata": { "source": "network_security.json", "topic": "network segmentation" }
+  }
+]

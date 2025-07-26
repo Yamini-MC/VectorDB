@@ -1,18 +1,35 @@
-import chromadb
-from chromadb.config import Settings
-from utils.config import CHROMA_COLLECTION_NAME
-from pathlib import Path
+# chromadb_setup/query_chroma.py
 
-CHROMA_DB_PATH = str(Path(__file__).resolve().parent.parent / "chroma_db")
-chroma_client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
-def query_documents(query_text: str, top_k: int = 3):
-    collection = chroma_client.get_collection(name=CHROMA_COLLECTION_NAME)
-    results = collection.query(query_texts=[query_text], n_results=top_k)
-    formatted_results = []
-    for i in range(len(results['documents'][0])):
-        formatted_results.append({
-            "id": results['ids'][0][i],
-            "text": results['documents'][0][i],
-            "metadata": results['metadatas'][0][i]
+import chromadb
+from sentence_transformers import SentenceTransformer
+
+# Initialize Chroma client and collection
+client = chromadb.PersistentClient(path="chroma_db")
+collection = client.get_or_create_collection(name="cybersec_docs")
+
+# Load embedding model
+model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+
+def query_documents(query: str, top_k: int = 3):
+    # Embed the query
+    query_embedding = model.encode([query])[0]
+
+    # Perform similarity search
+    results = collection.query(
+        query_embeddings=[query_embedding],
+        n_results=top_k
+    )
+
+    output = []
+    # Ensure we only access what's actually returned
+    returned = len(results["ids"][0])
+
+    for i in range(returned):
+        output.append({
+            "id": results["ids"][0][i],
+            "document": results["documents"][0][i],
+            "metadata": results["metadatas"][0][i],
+            "distance": results["distances"][0][i]
         })
-    return formatted_results
+
+    return output
